@@ -204,12 +204,12 @@ struct
 
     let mot tag =
       is_tag := true;
-      tagf0.mark_open_tag tag
+      tagf0.mark_open_stag tag
     in
 
     let mct tag =
       is_tag := true;
-      tagf0.mark_close_tag tag
+      tagf0.mark_close_stag tag
     in
 
     let print s p n =
@@ -222,8 +222,8 @@ struct
 
     let tagf = {
       tagf0 with
-        mark_open_tag = mot;
-        mark_close_tag = mct
+        mark_open_stag = mot;
+        mark_close_stag = mct
     }
     in
     Format.pp_set_formatter_output_functions fmt print flush0;
@@ -249,19 +249,19 @@ struct
           Hashtbl.add tbl1 style_name style.tag_open;
           Hashtbl.add tbl2 style_name style.tag_close
       ) l;
-      let mark_open_tag style_name =
+      let mark_open_stag style_name =
         try Hashtbl.find tbl1 style_name
         with Not_found -> ""
       in
-      let mark_close_tag style_name =
+      let mark_close_stag style_name =
         try Hashtbl.find tbl2 style_name
         with Not_found -> ""
       in
 
       let tagf = {
         (Format.pp_get_formatter_stag_functions fmt () [@warning "-3"] ) with
-          mark_open_tag = mark_open_tag;
-          mark_close_tag = mark_close_tag
+          mark_open_stag = mark_open_stag;
+          mark_close_stag = mark_close_stag
       }
       in
       Format.pp_set_formatter_tag_functions fmt tagf [@warning "-3"]
