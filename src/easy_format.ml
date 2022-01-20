@@ -198,7 +198,7 @@ struct
   *)
   let set_escape fmt escape =
     let print0, flush0 = Format.pp_get_formatter_output_functions fmt () [@warning "-3"] in
-    let tagf0 = Format.pp_get_formatter_tag_functions fmt () [@warning "-3"] in
+    let tagf0 = Format.pp_get_formatter_stag_functions fmt () [@warning "-3"] in
 
     let is_tag = ref false in
 
@@ -259,7 +259,7 @@ struct
       in
 
       let tagf = {
-        (Format.pp_get_formatter_tag_functions fmt () [@warning "-3"] ) with
+        (Format.pp_get_formatter_stag_functions fmt () [@warning "-3"] ) with
           mark_open_tag = mark_open_tag;
           mark_close_tag = mark_close_tag
       }
